@@ -28,7 +28,7 @@ on darwin_arm64
 In the root folder run the following command:
 
 ```bash
-terraform init
+terraform -chdir=terraform/ init
 ```
 
 ## Setup AWS Credentials
@@ -72,4 +72,35 @@ Once in the virtual environment, install the dependencies:
 
 ```bash
 pip install -r dev-requirements.txt
+```
+
+We will only use the dev requirements to run the project locally.
+
+# Deploying to AWS
+
+Once you have setup your AWS credentials, in order to deploy this changes to AWS run this:
+
+```bash
+terraform -chdir=terraform/ plan
+```
+
+The output will have all the changes to be applied by the TF file. To apply the changes run:
+
+```bash
+terraform -chdir=terraform/ apply
+```
+
+This will ask you for confirmation. Type `yes` to apply the changes. If you want to apply the changes
+inmediatelly, run this.
+
+```bash
+terraform -chdir=terraform/ apply -auto-approve -input=false
+```
+
+# Running locally
+
+There is a file called `event.json` which has the structure of the event to run the code.
+
+```bash
+python-lambda-local src/index.js event.json
 ```

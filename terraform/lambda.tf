@@ -1,12 +1,9 @@
-provider "aws" {
-  region = "us-west-2"
-}
 
 data "archive_file" "lambda_adn" {
   type = "zip"
 
-  source_dir  = "${path.module}/src"
-  output_path = "${path.module}/lambda_adn.zip"
+  source_dir  = "../src"
+  output_path = "../lambda_adn.zip"
 }
 
 # to Create function
@@ -38,9 +35,4 @@ resource "aws_iam_role" "lambda_exec" {
       }
     ]
   })
-}
-
-resource "aws_iam_role_policy_attachment" "lambda_policy" {
-  role       = aws_iam_role.lambda_exec.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }

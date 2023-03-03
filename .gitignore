@@ -1,5 +1,4 @@
 venv
-event.json
 context.json
 .env
 .vscode/
@@ -7,3 +6,4 @@ context.json
 .terraform.*
 terraform.*
 .terraform/
+.DS_Store

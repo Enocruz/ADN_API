@@ -1,5 +1,7 @@
+import json
+
+
 def handler(event, context):
-    print(event)
-    print(context)
-    print("Deployment done")
+    dna_list = event.get("dna")
+    print(dna_list)
     return

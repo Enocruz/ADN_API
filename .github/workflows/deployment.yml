@@ -22,10 +22,10 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
       - name: Terraform init
         id: init
-        run: terraform init
+        run: terraform -chdir=terraform/ init
       - name: Terraform plan
         id: plan
-        run: terraform plan
+        run: terraform -chdir=terraform/ plan
       - name: Terraform apply
         id: apply
-        run: terraform apply -auto-approve -input=false
+        run: terraform -chdir=terraform/ apply -auto-approve -input=false
