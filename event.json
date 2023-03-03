@@ -1,3 +1,47 @@
 {
-    "dna":["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]
+    "version": "1.0",
+    "resource": "/stats",
+    "path": "/api_gw_lambda/stats",
+    "httpMethod": "GET",
+    "headers": {
+        "Content-Length": "0",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+    },
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "requestContext": {
+        "accountId": "452570723682",
+        "apiId": "pxoiq90i7i",
+        "domainName": "pxoiq90i7i.execute-api.us-west-2.amazonaws.com",
+        "domainPrefix": "pxoiq90i7i",
+        "extendedRequestId": "BL42yjcqvHcEPyw=",
+        "httpMethod": "GET",
+        "identity": {
+            "accessKey": null,
+            "accountId": null,
+            "caller": null,
+            "cognitoAmr": null,
+            "cognitoAuthenticationProvider": null,
+            "cognitoAuthenticationType": null,
+            "cognitoIdentityId": null,
+            "cognitoIdentityPoolId": null,
+            "principalOrgId": null,
+            "sourceIp": "189.216.159.116",
+            "user": null,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+            "userArn": null
+        },
+        "path": "/api_gw_lambda/stats",
+        "protocol": "HTTP/1.1",
+        "requestId": "BL42yjcqvHcEPyw=",
+        "requestTime": "03/Mar/2023:03:50:41 +0000",
+        "requestTimeEpoch": 1677815441554,
+        "resourceId": "GET /stats",
+        "resourcePath": "/stats",
+        "stage": "api_gw_lambda"
+    },
+    "pathParameters": null,
+    "stageVariables": null,
+    "body": null,
+    "isBase64Encoded": false
 }
