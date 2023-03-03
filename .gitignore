@@ -3,7 +3,6 @@ context.json
 .env
 .vscode/
 *.zip
-.terraform.*
 terraform.*
 .terraform/
 .DS_Store
