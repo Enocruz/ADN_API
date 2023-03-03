@@ -2,8 +2,8 @@ name: Running tests
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+      - all_branches
 
 jobs:
   build:
