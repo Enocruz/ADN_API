@@ -5,7 +5,7 @@ resource "aws_iam_role_policy_attachment" "lambda_policy" {
 }
 
 resource "aws_apigatewayv2_api" "lambda_api" {
-  name          = "api_gw_lambda"
+  name          = "api_gw_lambda_adn"
   protocol_type = "HTTP"
 }
 
@@ -37,7 +37,7 @@ resource "aws_apigatewayv2_stage" "lambda_api" {
 resource "aws_apigatewayv2_integration" "lambda_call" {
   api_id = aws_apigatewayv2_api.lambda_api.id
 
-  integration_uri    = aws_lambda_function.lambda_adn.invoke_arn
+  integration_uri    = aws_lambda_function.lambda_adn_function.invoke_arn
   integration_type   = "AWS_PROXY"
   integration_method = "POST"
 }
@@ -65,7 +65,7 @@ resource "aws_cloudwatch_log_group" "api_gw" {
 resource "aws_lambda_permission" "api_gw" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda_adn.function_name
+  function_name = aws_lambda_function.lambda_adn_function.function_name
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_apigatewayv2_api.lambda_api.execution_arn}/*/*"
