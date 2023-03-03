@@ -71,5 +71,5 @@ source venv/bin/activate
 Once in the virtual environment, install the dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install -r dev-requirements.txt
 ```
