@@ -2,3 +2,8 @@ venv
 event.json
 context.json
 .env
+.vscode/
+*.zip
+.terraform.*
+terraform.*
+.terraform/
