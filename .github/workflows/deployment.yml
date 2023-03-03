@@ -31,6 +31,6 @@ jobs:
       - name: Terraform plan
         id: plan
         run: terraform -chdir=terraform/ plan -out=tfplan
-      # - name: Terraform apply
-      #   id: apply
-      #   run: terraform -chdir=terraform/ apply -auto-approve -input=false tfplan
+      - name: Terraform apply
+        id: apply
+        run: terraform -chdir=terraform/ apply -auto-approve -input=false tfplan

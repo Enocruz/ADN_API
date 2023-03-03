@@ -11,7 +11,7 @@ resource "aws_lambda_function" "lambda_adn_function" {
   function_name    = "lambda_adn_function"
   filename         = "lambda_function.zip"
   runtime          = "python3.9"
-  handler          = "index.handler"
+  handler          = "handler.handler"
   source_code_hash = data.archive_file.lambda_adn_function.output_base64sha256
   role             = aws_iam_role.lambda_exec.arn
 }

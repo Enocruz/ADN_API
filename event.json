@@ -42,6 +42,6 @@
     },
     "pathParameters": null,
     "stageVariables": null,
-    "body": null,
+    "body": "{\"dna\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}",
     "isBase64Encoded": false
 }
