@@ -1,6 +1,7 @@
 import json
 import pytest
 from src.handler import handler
+from unittest.mock import patch
 
 api_calls = [
     (
@@ -71,9 +72,33 @@ api_calls = [
 
 
 class TestIntegration:
+    dynamo_mock = {"status": "OK", "response": "Success"}
+    stats_mock = {"count_no_mutation": 0, "count_mutations": 0, "ratio": 0.0}
+    test_get_input = (
+        {
+            "httpMethod": "GET",
+            "resource": "/stats",
+        },
+        {
+            "statusCode": 200,
+            "body": stats_mock,
+        },
+    )
+
     @pytest.mark.parametrize("test_input", api_calls)
-    def test_handler_response(self, test_input):
-        api_call, expected_response = test_input
-        response = handler(event=api_call, context=None)
-        assert response == expected_response
-        assert isinstance(response, dict)
+    def test_handler_response_post(self, test_input):
+        with patch("src.handler.insert_dna", return_value=self.dynamo_mock), patch(
+            "src.handler.update_stats", return_value=self.dynamo_mock
+        ):
+            api_call, expected_response = test_input
+            response = handler(event=api_call, context=None)
+            assert response == expected_response
+            assert isinstance(response, dict)
+
+    def test_handler_response_get(self):
+        with patch("src.handler.get_stats", return_value=self.stats_mock):
+            api_call, expected_response = self.test_get_input
+            response = handler(event=api_call, context=None)
+            assert response == expected_response
+            assert isinstance(response, dict)
+            assert response.get("body") == self.stats_mock
