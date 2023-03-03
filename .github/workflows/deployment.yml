@@ -1,6 +1,11 @@
 name: API Deployment
 run-name: ${{ github.actor }} is deploying to production
-on: [push]
+on:
+  push:
+    branches: ["main", "terraform-config"]
+  pull_request:
+    branches: ["main", "terraform-config"]
+  workflow_dispatch:
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
