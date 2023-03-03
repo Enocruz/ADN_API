@@ -3,6 +3,8 @@ context.json
 .env
 .vscode/
 *.zip
-terraform.tfstate.backup
+.terraform.lock.hcl
+terraform.*
 .terraform/
 .DS_Store
+tf*
