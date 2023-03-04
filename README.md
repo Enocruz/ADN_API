@@ -78,29 +78,57 @@ We will only use the dev requirements to run the project locally.
 
 # Deploying to AWS
 
-Once you have setup your AWS credentials, in order to deploy this changes to AWS run this:
+Once you have setup your AWS credentials, in order to deploy this changes to AWS move to the terraform folder:
 
 ```bash
-terraform -chdir=terraform/ plan
+cd terraform
+```
+
+And run:
+
+```bash
+terraform plan
 ```
 
 The output will have all the changes to be applied by the TF file. To apply the changes run:
 
 ```bash
-terraform -chdir=terraform/ apply
+terraform apply
 ```
 
 This will ask you for confirmation. Type `yes` to apply the changes. If you want to apply the changes
 inmediatelly, run this.
 
 ```bash
-terraform -chdir=terraform/ apply -auto-approve -input=false
+terraform apply -auto-approve -input=false
 ```
 
-# Running locally
+There will be an output for the API GW URL created in the console
+
+# Testing locally
 
 There is a file called `event.json` which has the structure of the event to run the code.
 
 ```bash
-python-lambda-local src/index.js event.json
+python-lambda-local src/handler.py event.json
+```
+
+# Running tests
+
+There is a folder called `tests` which contains unit and integration tests, to run all of them:
+
+```bash
+python3 -m pytest tests/*
+```
+
+# Coverage report
+
+To see the coverate report run the following commands in the root folder:
+
+``` bash
+coverage run -m pytest tests
+```
+
+```bash
+coverage report
 ```

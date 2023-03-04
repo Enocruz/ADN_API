@@ -6,7 +6,9 @@ MAX_MUTATION_SEQUENCES = 1
 
 def has_mutation(dna_sequence: List[str]) -> bool:
     if not dna_sequence:
-        return False
+        raise Exception("Empty DNA")
+    if len(dna_sequence) != len(dna_sequence[0]):
+        raise Exception("Invalid DNA")
     matrix: List[List[str]] = matrix_sequence(dna_sequence=dna_sequence)
     mutation_count = 0
     for i in range(len(matrix)):
