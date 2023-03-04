@@ -1,8 +1,8 @@
 {
     "version": "1.0",
-    "resource": "/stats",
+    "resource": "/mutation",
     "path": "/api_gw_lambda/stats",
-    "httpMethod": "GET",
+    "httpMethod": "POST",
     "headers": {
         "Content-Length": "0",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"

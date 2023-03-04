@@ -70,6 +70,31 @@ api_calls = [
     ),
 ]
 
+api_calls_found_dna = [
+    (
+        {
+            "httpMethod": "POST",
+            "resource": "/mutation",
+            "body": json.dumps(
+                {"dna": ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]}
+            ),
+        },
+        True,
+        {"statusCode": 200},
+    ),
+    (
+        {
+            "httpMethod": "POST",
+            "resource": "/mutation",
+            "body": json.dumps(
+                {"dna": ["ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]}
+            ),
+        },
+        False,
+        {"statusCode": 403},
+    ),
+]
+
 
 class TestIntegration:
     dynamo_mock = {"status": "OK", "response": "Success"}
@@ -86,12 +111,20 @@ class TestIntegration:
     )
 
     @pytest.mark.parametrize("test_input", api_calls)
-    def test_handler_response_post(self, test_input):
-        with patch("src.handler.insert_dna", return_value=self.dynamo_mock), patch(
-            "src.handler.update_stats", return_value=self.dynamo_mock
-        ):
+    def test_handler_response_post_new_dna(self, test_input):
+        with patch("src.handler.get_dna", return_value=None), patch(
+            "src.handler.insert_dna", return_value=self.dynamo_mock
+        ), patch("src.handler.update_stats", return_value=self.dynamo_mock):
             api_call, expected_response = test_input
             response = handler(event=api_call, context=None)
+            assert response == expected_response
+            assert isinstance(response, dict)
+
+    @pytest.mark.parametrize("test_input", api_calls_found_dna)
+    def test_handler_response_post_existing_dna(self, test_input):
+        api_call, get_dna_mock, expected_response = test_input
+        with patch("src.handler.get_dna", return_value=get_dna_mock):
+            response = handler(event=api_call)
             assert response == expected_response
             assert isinstance(response, dict)
 

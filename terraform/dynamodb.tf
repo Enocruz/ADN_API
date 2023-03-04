@@ -24,7 +24,6 @@ resource "aws_dynamodb_table" "dna-storage" {
   read_capacity  = 20
   write_capacity = 20
   hash_key       = "DNA"
-  range_key      = "CreatedDate"
 
 
   attribute {
@@ -32,10 +31,6 @@ resource "aws_dynamodb_table" "dna-storage" {
     type = "S"
   }
 
-  attribute {
-    name = "CreatedDate"
-    type = "S"
-  }
 
   tags = {
     Name        = "dynamodb-table-1"

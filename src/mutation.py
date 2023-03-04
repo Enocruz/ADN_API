@@ -5,6 +5,10 @@ MAX_MUTATION_SEQUENCES = 1
 
 
 def has_mutation(dna_sequence: List[str]) -> bool:
+    """
+    Validates wether a dna sequence in the form of a list of
+    strings has mutations
+    """
     if not dna_sequence:
         raise Exception("Empty DNA")
     if len(dna_sequence) != len(dna_sequence[0]):
@@ -23,6 +27,9 @@ def has_mutation(dna_sequence: List[str]) -> bool:
 
 
 def matrix_sequence(dna_sequence: List[str]) -> List[List[str]]:
+    """
+    Converts a list of strings into a matrix
+    """
     matrix: List[List[str]] = []
     for sequence in dna_sequence:
         matrix.append(list(sequence))
@@ -30,6 +37,9 @@ def matrix_sequence(dna_sequence: List[str]) -> List[List[str]]:
 
 
 def check_sequence(sequence: List[str]) -> bool:
+    """
+    Checks if a dna line sequence has a mutation or not
+    """
     count: int = 1
     for i in range(1, len(sequence)):
         if count == MAX_BASES:
