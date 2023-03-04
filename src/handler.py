@@ -1,16 +1,22 @@
 import json
 from src.mutation import has_mutation
-from src.stats import update_stats, get_stats, insert_dna
+from src.stats import update_stats, get_stats, insert_dna, get_dna
 
 MUTATION_RESOURCE = "/mutation"
 STATS_RESOURCE = "/stats"
 
 
 def simple_response(status_code: int) -> dict:
+    """
+    Returns status code to API GW
+    """
     return {"statusCode": status_code}
 
 
 def response(status_code: int, body: dict) -> dict:
+    """
+    Returns status code and body to API GW
+    """
     return {"statusCode": status_code, "body": body}
 
 
@@ -31,13 +37,26 @@ def handler(event, context=None):
 
 
 def handle_mutation(body: str):
+    """
+    Function that handles POST /mutation API CALL
+    Receives a body string and gets the dna from dynamo,
+    otherwise calculates and stores the result
+    """
     dict_body = json.loads(body).get("dna", None)
 
     if not dict_body:
         return response(status_code=404, body={"message": "Missing dna body"})
+    dna_found = get_dna(dict_sequence=dict_body)
+
+    # None means that the item was not found
+    if dna_found != None:
+        status_code = 200 if dna_found else 403
+        return simple_response(status_code=status_code)
 
     has_mutation_response = has_mutation(dna_sequence=dict_body)
-    insert_dynamo_response = insert_dna(dict_sequence=dict_body)
+    insert_dynamo_response = insert_dna(
+        dict_sequence=dict_body, has_mutation=has_mutation_response
+    )
     print(f"Sequence inserted: {insert_dynamo_response}")
 
     if insert_dynamo_response.get("status") == "OK":
@@ -49,5 +68,9 @@ def handle_mutation(body: str):
 
 
 def handle_stats():
+    """
+    Function that handles GET /stats API CALL
+    Makes a query to dynamo to return the current stats
+    """
     dynamo_response = get_stats()
     return response(status_code=200, body=dynamo_response)
