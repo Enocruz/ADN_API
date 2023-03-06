@@ -17,7 +17,7 @@ def response(status_code: int, body: dict) -> dict:
     """
     Returns status code and body to API GW
     """
-    return {"statusCode": status_code, "body": body}
+    return {"statusCode": status_code, "body": json.dumps(body)}
 
 
 def handler(event, context=None):

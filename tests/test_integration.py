@@ -99,15 +99,13 @@ api_calls_found_dna = [
 class TestIntegration:
     dynamo_mock = {"status": "OK", "response": "Success"}
     stats_mock = {"count_no_mutation": 0, "count_mutations": 0, "ratio": 0.0}
+
     test_get_input = (
         {
             "httpMethod": "GET",
             "resource": "/stats",
         },
-        {
-            "statusCode": 200,
-            "body": stats_mock,
-        },
+        {"statusCode": 200, "body": json.dumps(stats_mock)},
     )
 
     @pytest.mark.parametrize("test_input", api_calls)
@@ -134,4 +132,4 @@ class TestIntegration:
             response = handler(event=api_call, context=None)
             assert response == expected_response
             assert isinstance(response, dict)
-            assert response.get("body") == self.stats_mock
+            assert response.get("body") == json.dumps(self.stats_mock)

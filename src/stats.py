@@ -55,8 +55,7 @@ def get_stats() -> dict:
             else 0
         )
         return response
-    else:
-        raise stats.get("response")
+    raise Exception("get_stats Exception occurred")
 
 
 def insert_dna(dict_sequence: List[str], has_mutation: bool) -> dict:
