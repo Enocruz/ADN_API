@@ -37,25 +37,34 @@ def update_stats(has_mutation: bool) -> dict:
 def get_stats() -> dict:
     """
     Makes a query to dynamo table and builds the stats response dictionary
+    Returns:
     """
     stats = get_dynamo_stats(
         client=dynamo_client,
         table=STATS_TABLE_NAME,
     )
-    items = stats.get("response", {}).get("Items", [])
-    response = {}
-    for item in items:
-        response[item.get(KEY_STATS_TABLE)] = int(item.get(STATS_FIELD_NAME))
-    no_mutation_count = response.get(NO_MUTATION_KEY)
-    response["ratio"] = float(
-        response.get(HAS_MUTATION_KEY) / no_mutation_count if no_mutation_count else 0
-    )
-    return response
+    if stats.get("status") == "OK":
+        items = stats.get("response", {}).get("Items", [])
+        response = {}
+        for item in items:
+            response[item.get(KEY_STATS_TABLE)] = int(item.get(STATS_FIELD_NAME))
+        no_mutation_count = response.get(NO_MUTATION_KEY)
+        response["ratio"] = float(
+            response.get(HAS_MUTATION_KEY) / no_mutation_count
+            if no_mutation_count
+            else 0
+        )
+        return response
+    else:
+        raise stats.get("response")
 
 
 def insert_dna(dict_sequence: List[str], has_mutation: bool) -> dict:
     """
     Converts the list into a string and inserts it to dynamo
+    Returns:
+        status: Wheter dynamo request was successfull or not
+        response: Dynamo response
     """
     sequence_str = "".join(dict_sequence)
     response = insert_dynamo_dna(
