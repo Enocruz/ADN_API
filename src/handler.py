@@ -1,6 +1,6 @@
 import json
-from src.mutation import has_mutation
-from src.stats import update_stats, get_stats, insert_dna, get_dna
+from mutation import has_mutation
+from stats import update_stats, get_stats, insert_dna, get_dna
 
 MUTATION_RESOURCE = "/mutation"
 STATS_RESOURCE = "/stats"

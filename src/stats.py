@@ -1,7 +1,7 @@
 import boto3
 from botocore.config import Config
 from datetime import datetime
-from src.storage import (
+from storage import (
     update_dynamo_stats,
     get_dynamo_stats,
     insert_dynamo_dna,
