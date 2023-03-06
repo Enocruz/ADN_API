@@ -1,6 +1,12 @@
 # Installation
 
-This project is setup with Terraform, in order to deploy this code manually into an AWS account, make sure to have installed terraform and AWS CLI:
+This project is setup with Terraform, in order to deploy this code manually into an AWS account, make sure to have installed terraform and AWS CLI.
+The terraform will create the following services:
+
+- Lambda
+- DynamoDB tables
+- API Gateway
+- IAM Roles and Policies
 
 ## AWS CLI
 
@@ -29,6 +35,13 @@ In the root folder run the following command:
 
 ```bash
 terraform -chdir=terraform/ init
+```
+
+Or change to the terraform folder and execute:
+
+```bash
+cd terraform
+terraform init
 ```
 
 ## Setup AWS Credentials
@@ -87,31 +100,38 @@ cd terraform
 And run:
 
 ```bash
-terraform plan
+terraform plan -out=tfplan
 ```
 
 The output will have all the changes to be applied by the TF file. To apply the changes run:
 
 ```bash
-terraform apply
+terraform apply tfplan
 ```
 
 This will ask you for confirmation. Type `yes` to apply the changes. If you want to apply the changes
 inmediatelly, run this.
 
 ```bash
-terraform apply -auto-approve -input=false
+terraform apply -auto-approve -input=false tfplan
 ```
 
 There will be an output for the API GW URL created in the console
 
 # Testing locally
 
-There is a file called `event.json` which has the structure of the event to run the code.
+There are two files called `event_*.json` which has the structure of the event to run the code.
+One is used to simulate a GET request and the other one to simulate a POST request
 
 ```bash
-python-lambda-local src/handler.py event.json
+python-lambda-local src/handler.py event_post.json
 ```
+
+```bash
+python-lambda-local src/handler.py event_get.json
+```
+
+- Remember that you need to apply the TF file in order to execute the lambda locally
 
 # Running tests
 
