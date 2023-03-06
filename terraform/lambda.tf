@@ -41,7 +41,7 @@ resource "aws_iam_role" "lambda_exec" {
 data "aws_iam_policy_document" "dynamo_policy_document" {
   statement {
     effect    = "Allow"
-    actions   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:UpdateItem"]
+    actions   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:UpdateItem", "dynamodb:Scan"]
     resources = [aws_dynamodb_table.dna-storage.arn, aws_dynamodb_table.dna-stats.arn]
   }
 }
