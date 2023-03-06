@@ -15,7 +15,8 @@ def update_dynamo_stats(client, table: str, key: str, keyValue: str) -> dict:
         )
         return {"status": "OK", "response": response}
     except ClientError as err:
-        return {"status": "ERROR", "response": err}
+        print(err)
+        return {"status": "ERROR", "response": str(err)}
 
 
 def get_dynamo_stats(client, table: str) -> dict:
@@ -27,7 +28,8 @@ def get_dynamo_stats(client, table: str) -> dict:
         response = dynamo_tb.scan()
         return {"status": "OK", "response": response}
     except ClientError as err:
-        return {"status": "ERROR", "response": err}
+        print(err)
+        return {"status": "ERROR", "response": str(err)}
 
 
 def insert_dynamo_dna(client, table: str, value: str, has_mutation: bool) -> dict:
@@ -44,7 +46,8 @@ def insert_dynamo_dna(client, table: str, value: str, has_mutation: bool) -> dic
         )
         return {"status": "OK", "response": response}
     except ClientError as err:
-        return {"status": "ERROR", "response": err}
+        print(err)
+        return {"status": "ERROR", "response": str(err)}
 
 
 def get_dynamo_dna(client, table: str, value: str) -> dict:
@@ -56,4 +59,5 @@ def get_dynamo_dna(client, table: str, value: str) -> dict:
         response = dynamo_tb.get_item(Key={"DNA": value})
         return {"status": "OK", "response": response}
     except ClientError as err:
-        return {"status": "ERROR", "response": err}
+        print(err)
+        return {"status": "ERROR", "response": str(err)}

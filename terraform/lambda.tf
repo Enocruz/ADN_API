@@ -36,3 +36,23 @@ resource "aws_iam_role" "lambda_exec" {
     ]
   })
 }
+
+# Dynamo permission
+data "aws_iam_policy_document" "dynamo_policy_document" {
+  statement {
+    effect    = "Allow"
+    actions   = ["dynamodb:GetItem", "dynamodb:PutItem"]
+    resources = [aws_dynamodb_table.dna-storage.arn, aws_dynamodb_table.dna-stats.arn]
+  }
+}
+
+resource "aws_iam_policy" "policy" {
+  name        = "dynamo-policy"
+  description = "Read-write dynamo policy"
+  policy      = data.aws_iam_policy_document.dynamo_policy_document.json
+}
+
+resource "aws_iam_role_policy_attachment" "test-attach" {
+  role       = aws_iam_role.lambda_exec.name
+  policy_arn = aws_iam_policy.policy.arn
+}
